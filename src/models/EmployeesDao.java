@@ -153,7 +153,7 @@ public class EmployeesDao {
     
     //Eliminar empleado
     public boolean deleteEmployeeQuery(int id){
-        String query = "DELET FROM employees WHERE id = " + id;
+        String query = "DELETE FROM employees WHERE id = " + id;
         try{
             conn = cn.getConnection();
             pst = conn.prepareStatement(query);

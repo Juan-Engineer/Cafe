@@ -1,33 +1,52 @@
 
 package views;
 
+import controlers.CustomersController;
 import controlers.EmployeesController;
 import controlers.SettingsController;
+import models.Customers;
+import models.CustomersDao;
 import models.Employees;
 import models.EmployeesDao;
+import static models.EmployeesDao.full_name_user;
+import static models.EmployeesDao.role_user;
 
 public class SystemView extends javax.swing.JFrame {
 
-    //Empleado
+    //Empleados
     Employees employee = new Employees();
     EmployeesDao employeeDao = new EmployeesDao();
+    //Clientes
+    Customers customer = new Customers();
+    CustomersDao customersDao = new CustomersDao();
     
     public SystemView() {
         initComponents();
         setSize(1208, 680);
         setResizable(false);
-        setTitle("Panel de administración");
         setLocationRelativeTo(null);
+        titleInterface();
         
         //Controlador del settings
         SettingsController setting = new SettingsController(this);
         this.repaint();
         
-        //Controlado de empleados
+        //Controlador de empleados
         EmployeesController employee_account = new EmployeesController(employee, employeeDao, this);
         employee_account.listAllEmployees();
+        
+        //Controlador de clientes
+        CustomersController customer_account = new CustomersController(customer, customersDao, this);
+        customer_account.listAllCustomers();
     }
 
+    public String titleInterface(){
+    setTitle("Panel - " + role_user);
+    label_name_employee.setText(full_name_user);
+    label_name_role.setText(role_user);
+    return role_user.trim();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -248,6 +267,8 @@ public class SystemView extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btn_photo = new javax.swing.JButton();
         btn_logout = new javax.swing.JButton();
+        label_name_employee = new javax.swing.JLabel();
+        label_name_role = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1112,7 +1133,7 @@ public class SystemView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "NAME", "PHONE", "ADDRESS", "EMAIL"
+                "ID", "NAME", "ADDRESS", "PHONE", "EMAIL"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1699,6 +1720,14 @@ public class SystemView extends javax.swing.JFrame {
         });
         jPanel3.add(btn_logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 35, -1, 30));
 
+        label_name_employee.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        label_name_employee.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel3.add(label_name_employee, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 30, 140, -1));
+
+        label_name_role.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        label_name_role.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel3.add(label_name_role, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 60, 140, -1));
+
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 1010, 100));
 
         pack();
@@ -1912,17 +1941,19 @@ public class SystemView extends javax.swing.JFrame {
     public javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    public javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     public javax.swing.JTextField jTextField1;
     public javax.swing.JTextField jTextField2;
+    public javax.swing.JLabel label_name_employee;
+    public javax.swing.JLabel label_name_role;
     public javax.swing.JTable products_table;
     public javax.swing.JTable purchases_table;
     private javax.swing.JTable sales_table;
     private javax.swing.JTable supplier_table;
     public javax.swing.JTable table_all_purchases;
     private javax.swing.JTable table_all_sales;
-    private javax.swing.JTextField txt_address_profile;
+    public javax.swing.JTextField txt_address_profile;
     private javax.swing.JLabel txt_category_id;
     private javax.swing.JLabel txt_category_name;
     public javax.swing.JTextField txt_customer_address;
@@ -1930,7 +1961,7 @@ public class SystemView extends javax.swing.JFrame {
     public javax.swing.JTextField txt_customer_fullname;
     public javax.swing.JTextField txt_customer_id;
     public javax.swing.JTextField txt_customer_telephone;
-    private javax.swing.JTextField txt_email_profile;
+    public javax.swing.JTextField txt_email_profile;
     public javax.swing.JTextField txt_employee_address;
     public javax.swing.JTextField txt_employee_email;
     public javax.swing.JTextField txt_employee_fullname;
@@ -1938,11 +1969,11 @@ public class SystemView extends javax.swing.JFrame {
     public javax.swing.JPasswordField txt_employee_password;
     public javax.swing.JTextField txt_employee_telephone;
     public javax.swing.JTextField txt_employee_username;
-    private javax.swing.JTextField txt_id_profile;
-    private javax.swing.JTextField txt_name_profile;
+    public javax.swing.JTextField txt_id_profile;
+    public javax.swing.JTextField txt_name_profile;
     public javax.swing.JPasswordField txt_password_modify;
     public javax.swing.JPasswordField txt_password_modify_confirm;
-    private javax.swing.JTextField txt_phone_profile;
+    public javax.swing.JTextField txt_phone_profile;
     public javax.swing.JTextField txt_product_description;
     public javax.swing.JTextField txt_product_id;
     public javax.swing.JTextField txt_product_name;
