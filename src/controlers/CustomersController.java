@@ -28,8 +28,15 @@ public class CustomersController implements ActionListener, MouseListener, KeyLi
         this.views = views;
         //Botón de registrar cliente
         this.views.btn_register_customer.addActionListener(this);
+        //Botón de modificar clientes
+        this.views.btn_update_customer.addActionListener(this);
+        //Botón de eliminar cliente
+        this.views.btn_delete_customer.addActionListener(this);
+        //Botón de cancelar
+        this.views.btn_cancel_customer.addActionListener(this);
         //Buscador
         this.views.txt_search_customer.addKeyListener(this);
+        this.views.jLabelCustomers.addMouseListener(this);
         this.views.customers_table.addMouseListener(this);
     }
 
@@ -59,6 +66,54 @@ public class CustomersController implements ActionListener, MouseListener, KeyLi
                     JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar cliente");
                 }
             }
+        }else if(e.getSource() == views.btn_update_customer){
+            if(views.txt_customer_id.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Selecciona una fila para continuar");
+            }else{
+                if(views.txt_customer_id.getText().equals("")
+                   || views.txt_customer_fullname.getText().equals("")
+                   || views.txt_customer_address.getText().equals("")
+                   || views.txt_customer_telephone.getText().equals("")
+                   || views.txt_customer_email.getText().equals("")){
+                    
+                    JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
+                }else{
+                    customer.setId(Integer.parseInt(views.txt_customer_id.getText().trim()));
+                    customer.setFull_name(views.txt_customer_fullname.getText().trim());
+                    customer.setAddress(views.txt_customer_address.getText().trim());
+                    customer.setPhone(views.txt_customer_telephone.getText().trim());
+                    customer.setEmail(views.txt_customer_email.getText().trim());
+                    
+                    if(customerDao.updateCustomerQuery(customer)){
+                        cleanTable();
+                        cleanFields();
+                        listAllCustomers();
+                        views.btn_register_customer.setEnabled(true);
+                        JOptionPane.showMessageDialog(null, "Datos modificados con éxito");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error al modificar los datos");
+                    }
+                }
+            }
+        }else if(e.getSource() == views.btn_delete_customer){
+            int row = views.customers_table.getSelectedRow();
+            if(row == -1){
+                JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente para eliminar");
+            }else{
+                int id = Integer.parseInt(views.customers_table.getValueAt(row, 0).toString());
+                int question = JOptionPane.showConfirmDialog(null, "¿En realidad quieres eliminar este cliente?");
+                
+                if (question == 0 && customerDao.deleteCustomerQuery(id) != false){
+                    cleanTable();
+                    cleanFields();
+                    views.btn_register_customer.setEnabled(true);
+                    listAllCustomers();
+                    JOptionPane.showMessageDialog(null, "Cliente eliminado con éxito");
+                }
+            }
+        }else if(e.getSource() == views.btn_cancel_customer){
+            views.btn_register_customer.setEnabled(true);
+            cleanFields();
         }
     }
     
@@ -92,6 +147,14 @@ public class CustomersController implements ActionListener, MouseListener, KeyLi
             //Deshabilitar botones
             views.btn_register_customer.setEnabled(false);
             views.txt_customer_id.setEditable(false);
+        }else if(e.getSource() == views.jLabelCustomers){
+            views.jTabbedPane1.setSelectedIndex(3);
+                //Limpiar tabla
+                cleanTable();
+                //Limpiar campos
+                cleanFields();
+                //Listar clientes
+                listAllCustomers();
         }
     }
 
@@ -127,6 +190,15 @@ public class CustomersController implements ActionListener, MouseListener, KeyLi
             //Listar clientes
             listAllCustomers();
         }
+    }
+    
+    public void cleanFields() {
+        views.txt_customer_id.setText("");
+        views.txt_customer_id.setEditable(true);
+        views.txt_customer_fullname.setText("");
+        views.txt_customer_address.setText("");
+        views.txt_customer_telephone.setText("");
+        views.txt_customer_email.setText("");
     }
     
     public void cleanTable() {

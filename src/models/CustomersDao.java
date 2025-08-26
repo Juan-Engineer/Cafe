@@ -85,7 +85,8 @@ public boolean updateCustomerQuery(Customers customer){
         pst.setString(3, customer.getPhone());
         pst.setString(4, customer.getEmail());
         pst.setTimestamp(5, datetime);
-        pst.setInt(6, customer.getId());
+        pst.setTimestamp(6, datetime);
+        pst.setInt(7, customer.getId());
         pst.execute();
         return true;
         
@@ -97,7 +98,7 @@ public boolean updateCustomerQuery(Customers customer){
 
 //Elimiar cliente
 public boolean deleteCustomerQuery(int id){
-        String query = "DELET FROM customers WHERE id = " + id;
+        String query = "DELETE FROM customers WHERE id = " + id;
         try{
             conn = cn.getConnection();
             pst = conn.prepareStatement(query);

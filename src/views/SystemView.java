@@ -1,15 +1,21 @@
 
 package views;
 
+import controlers.CategoriesController;
 import controlers.CustomersController;
 import controlers.EmployeesController;
 import controlers.SettingsController;
+import controlers.SuppliersController;
+import models.Categories;
+import models.CategoriesDao;
 import models.Customers;
 import models.CustomersDao;
 import models.Employees;
 import models.EmployeesDao;
 import static models.EmployeesDao.full_name_user;
 import static models.EmployeesDao.role_user;
+import models.Suppliers;
+import models.SuppliersDao;
 
 public class SystemView extends javax.swing.JFrame {
 
@@ -19,6 +25,12 @@ public class SystemView extends javax.swing.JFrame {
     //Clientes
     Customers customer = new Customers();
     CustomersDao customersDao = new CustomersDao();
+    //Proveedores
+    Suppliers supplier = new Suppliers();
+    SuppliersDao supplierDao = new SuppliersDao();
+    //Categorías
+    Categories category = new Categories();
+    CategoriesDao categoryDao = new CategoriesDao();
     
     public SystemView() {
         initComponents();
@@ -38,6 +50,14 @@ public class SystemView extends javax.swing.JFrame {
         //Controlador de clientes
         CustomersController customer_account = new CustomersController(customer, customersDao, this);
         customer_account.listAllCustomers();
+        
+        //Controlador de proveedores
+        SuppliersController supplier_account = new SuppliersController(supplier, supplierDao, this);
+        supplier_account.listAllSuppliers();
+        
+        //Controlador de categorías
+        CategoriesController category_section = new CategoriesController(category, categoryDao, this);
+        category_section.listAllCategories();
     }
 
     public String titleInterface(){
@@ -228,13 +248,14 @@ public class SystemView extends javax.swing.JFrame {
         supplier_table = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
-        txt_category_id = new javax.swing.JLabel();
-        txt_category_name = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txt_category_id2 = new javax.swing.JLabel();
+        txt_category_name2 = new javax.swing.JLabel();
+        txt_category_id = new javax.swing.JTextField();
+        txt_category_name = new javax.swing.JTextField();
         btn_register_category = new javax.swing.JButton();
         btn_update_category = new javax.swing.JButton();
         btn_delete_category = new javax.swing.JButton();
+        btn_cancel_category = new javax.swing.JButton();
         jLabel43 = new javax.swing.JLabel();
         txt_search_category = new javax.swing.JTextField();
         jScrollPane7 = new javax.swing.JScrollPane();
@@ -1438,14 +1459,14 @@ public class SystemView extends javax.swing.JFrame {
 
         jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categories", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        txt_category_id.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txt_category_id.setText("ID:");
+        txt_category_id2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txt_category_id2.setText("ID:");
 
-        txt_category_name.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txt_category_name.setText("Name:");
+        txt_category_name2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txt_category_name2.setText("Name:");
 
-        jTextField1.setEditable(false);
-        jTextField1.setEnabled(false);
+        txt_category_id.setEditable(false);
+        txt_category_id.setEnabled(false);
 
         btn_register_category.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btn_register_category.setText("Register");
@@ -1456,6 +1477,9 @@ public class SystemView extends javax.swing.JFrame {
         btn_delete_category.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btn_delete_category.setText("Delete");
 
+        btn_cancel_category.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btn_cancel_category.setText("Cancel");
+
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
         jPanel17Layout.setHorizontalGroup(
@@ -1463,23 +1487,25 @@ public class SystemView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel17Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_delete_category, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel17Layout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_category_name)
-                            .addComponent(txt_category_id))
+                            .addComponent(txt_category_name2)
+                            .addComponent(txt_category_id2))
                         .addGap(41, 41, 41)
                         .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel17Layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_category_name, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btn_update_category, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel17Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_category_id, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                                .addComponent(btn_register_category, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(btn_register_category, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_delete_category, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                            .addComponent(btn_cancel_category, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(58, 58, 58))
         );
         jPanel17Layout.setVerticalGroup(
@@ -1487,18 +1513,20 @@ public class SystemView extends javax.swing.JFrame {
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_category_id)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_category_id2)
+                    .addComponent(txt_category_id, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_register_category, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txt_category_name)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_category_name2)
+                        .addComponent(txt_category_name, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btn_update_category, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addComponent(btn_delete_category, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btn_cancel_category, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jPanel9.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 20, 520, 270));
@@ -1797,6 +1825,7 @@ public class SystemView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add_product_sale;
     public javax.swing.JButton btn_add_product_to_buy;
+    public javax.swing.JButton btn_cancel_category;
     public javax.swing.JButton btn_cancel_customer;
     public javax.swing.JButton btn_cancel_employee;
     public javax.swing.JButton btn_cancel_product;
@@ -1943,19 +1972,19 @@ public class SystemView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane9;
     public javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    public javax.swing.JTextField jTextField1;
-    public javax.swing.JTextField jTextField2;
     public javax.swing.JLabel label_name_employee;
     public javax.swing.JLabel label_name_role;
     public javax.swing.JTable products_table;
     public javax.swing.JTable purchases_table;
     private javax.swing.JTable sales_table;
-    private javax.swing.JTable supplier_table;
+    public javax.swing.JTable supplier_table;
     public javax.swing.JTable table_all_purchases;
     private javax.swing.JTable table_all_sales;
     public javax.swing.JTextField txt_address_profile;
-    private javax.swing.JLabel txt_category_id;
-    private javax.swing.JLabel txt_category_name;
+    public javax.swing.JTextField txt_category_id;
+    private javax.swing.JLabel txt_category_id2;
+    public javax.swing.JTextField txt_category_name;
+    public javax.swing.JLabel txt_category_name2;
     public javax.swing.JTextField txt_customer_address;
     public javax.swing.JTextField txt_customer_email;
     public javax.swing.JTextField txt_customer_fullname;
@@ -2000,7 +2029,7 @@ public class SystemView extends javax.swing.JFrame {
     public javax.swing.JTextField txt_search_customer;
     public javax.swing.JTextField txt_search_employee;
     public javax.swing.JTextField txt_search_product;
-    private javax.swing.JTextField txt_search_supplier;
+    public javax.swing.JTextField txt_search_supplier;
     public javax.swing.JTextField txt_supplier_address;
     public javax.swing.JTextField txt_supplier_description;
     public javax.swing.JTextField txt_supplier_id;

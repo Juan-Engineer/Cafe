@@ -88,7 +88,7 @@ public boolean updateCategoryQuery(Categories category){
 
 //Eliminar categoría
 public boolean deleteCategoryQuery(int id){
-        String query = "DELET FROM categories WHERE id = " + id;
+        String query = "DELETE FROM categories WHERE id = " + id;
         try{
             conn = cn.getConnection();
             pst = conn.prepareStatement(query);
